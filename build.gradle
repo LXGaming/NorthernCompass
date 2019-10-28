@@ -1,0 +1,115 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "minecraftforge"
+            url = "https://files.minecraftforge.net/maven"
+        }
+    }
+
+    dependencies {
+        classpath("net.minecraftforge.gradle:ForgeGradle:3.+")
+    }
+}
+
+apply plugin: "java"
+apply plugin: "net.minecraftforge.gradle"
+apply plugin: "signing"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group = "io.github.lxgaming"
+archivesBaseName = "NorthernCompass"
+version = "1.0.0"
+
+minecraft {
+    mappings(channel: "snapshot", version: "20190719-1.14.3")
+    runs {
+        client = {
+            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
+            properties("forge.logging.console.level": "debug")
+            workingDirectory(project.file("run").canonicalPath)
+            source(sourceSets.main)
+        }
+
+        server = {
+            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
+            properties("forge.logging.console.level": "debug")
+            workingDirectory(project.file("run").canonicalPath)
+            source(sourceSets.main)
+        }
+    }
+}
+
+configurations {
+    provided {
+        compile.extendsFrom(provided)
+    }
+
+    build.dependsOn("signJar")
+    compileJava.dependsOn("filterJava")
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    minecraft("net.minecraftforge:forge:1.14.4-28.1.0")
+}
+
+compileJava {
+    doFirst {
+        source = filterJava.outputs
+    }
+}
+
+processResources {
+    from("LICENSE")
+    rename("LICENSE", "LICENSE-" + archivesBaseName)
+
+    from (sourceSets.main.resources.srcDirs) {
+        include("META-INF/mods.toml")
+        expand("version": version)
+    }
+}
+
+task filterJava(type: Sync) {
+    from(sourceSets.main.java)
+    into("$buildDir/tmp/$name")
+
+    expand(version: version)
+}
+
+task signJar {
+    doFirst {
+        if (!project.hasProperty("signing.keyStorePath") || !project.hasProperty("signing.secretKeyRingFile")) {
+            project.logger.warn("========== [WARNING] ==========")
+            project.logger.warn("")
+            project.logger.warn("   This build is not signed!   ")
+            project.logger.warn("")
+            project.logger.warn("========== [WARNING] ==========")
+            throw new StopExecutionException()
+        }
+    }
+
+    doLast {
+        configurations.archives.allArtifacts.files.each {
+            ant.signjar(
+                jar: it,
+                alias: project.property("signing.alias"),
+                storepass: project.property("signing.keyStorePassword"),
+                keystore: project.property("signing.keyStorePath"),
+                keypass: project.property("signing.keyStorePassword"),
+                preservelastmodified: project.property("signing.preserveLastModified"),
+                tsaurl: project.property("signing.timestampAuthority"),
+                digestalg: project.property("signing.digestAlgorithm")
+            )
+            project.logger.lifecycle("JAR Signed: " + it.name)
+
+            signing.sign(it)
+            project.logger.lifecycle("PGP Signed: " + it.name)
+        }
+    }
+}
