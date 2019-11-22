@@ -25,8 +25,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
@@ -34,7 +32,6 @@ public class AngleCompassProperty implements IItemPropertyGetter {
     
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("angle");
     
-    @OnlyIn(Dist.CLIENT)
     @Override
     public float call(ItemStack itemStack, @Nullable World world, @Nullable LivingEntity entity) {
         if (entity == null && !itemStack.isOnItemFrame()) {
@@ -75,7 +72,6 @@ public class AngleCompassProperty implements IItemPropertyGetter {
         return (float) modulo;
     }
     
-    @OnlyIn(Dist.CLIENT)
     private double getRotation(ItemFrameEntity itemFrameEntity) {
         Direction direction = itemFrameEntity.getHorizontalFacing();
         double entityRotation;
@@ -91,7 +87,6 @@ public class AngleCompassProperty implements IItemPropertyGetter {
         return (entityRotation + itemRotation) % 360.0D;
     }
     
-    @OnlyIn(Dist.CLIENT)
     private double getRotation(Entity entity) {
         return (entity.rotationYaw + 180.0D) % 360.0D;
     }
