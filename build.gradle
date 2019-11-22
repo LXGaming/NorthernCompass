@@ -21,7 +21,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "NorthernCompass"
-version = "1.0.0"
+version = "1.14.4-1.0.0"
 
 minecraft {
     mappings(channel: "snapshot", version: "20190719-1.14.3")
