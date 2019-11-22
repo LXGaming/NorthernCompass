@@ -19,13 +19,17 @@ package io.github.lxgaming.northerncompass.listener;
 import io.github.lxgaming.northerncompass.item.property.AngleCompassProperty;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 
 public class RegistryListener {
     
     @SubscribeEvent
     public void registerItem(RegistryEvent.Register<Item> event) {
-        Items.COMPASS.addPropertyOverride(AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty());
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+            Items.COMPASS.addPropertyOverride(AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty());
+        });
     }
 }
