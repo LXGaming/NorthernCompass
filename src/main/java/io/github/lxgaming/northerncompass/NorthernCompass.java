@@ -17,10 +17,8 @@
 package io.github.lxgaming.northerncompass;
 
 import io.github.lxgaming.northerncompass.listener.RegistryListener;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.StartupMessageManager;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,17 +36,10 @@ public class NorthernCompass {
     public NorthernCompass() {
         instance = this;
         
-        FMLJavaModLoadingContext.get().getModEventBus().register(this);
         FMLJavaModLoadingContext.get().getModEventBus().register(new RegistryListener());
         
         StartupMessageManager.addModMessage(String.format("%s v%s Initialized", NorthernCompass.NAME, NorthernCompass.VERSION));
         getLogger().info("{} v{} Initialized", NorthernCompass.NAME, NorthernCompass.VERSION);
-    }
-    
-    @SubscribeEvent
-    public void setup(FMLCommonSetupEvent event) {
-        StartupMessageManager.addModMessage(String.format("%s v%s Setup", NorthernCompass.NAME, NorthernCompass.VERSION));
-        getLogger().info("{} v{} Setup", NorthernCompass.NAME, NorthernCompass.VERSION);
     }
     
     public static NorthernCompass getInstance() {
