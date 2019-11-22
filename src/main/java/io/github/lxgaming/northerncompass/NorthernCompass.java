@@ -17,6 +17,8 @@
 package io.github.lxgaming.northerncompass;
 
 import io.github.lxgaming.northerncompass.listener.RegistryListener;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.StartupMessageManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -36,7 +38,9 @@ public class NorthernCompass {
     public NorthernCompass() {
         instance = this;
         
-        FMLJavaModLoadingContext.get().getModEventBus().register(new RegistryListener());
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+            FMLJavaModLoadingContext.get().getModEventBus().register(new RegistryListener());
+        });
         
         StartupMessageManager.addModMessage(String.format("%s v%s Initialized", NorthernCompass.NAME, NorthernCompass.VERSION));
         getLogger().info("{} v{} Initialized", NorthernCompass.NAME, NorthernCompass.VERSION);
