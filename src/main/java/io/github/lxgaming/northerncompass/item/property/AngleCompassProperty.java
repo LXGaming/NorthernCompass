@@ -17,11 +17,11 @@
 package io.github.lxgaming.northerncompass.item.property;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemFrameEntity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -33,7 +33,7 @@ public class AngleCompassProperty implements IItemPropertyGetter {
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("angle");
     
     @Override
-    public float call(ItemStack itemStack, @Nullable World world, @Nullable LivingEntity entity) {
+    public float apply(ItemStack itemStack, @Nullable World world, @Nullable EntityLivingBase entity) {
         if (entity == null && !itemStack.isOnItemFrame()) {
             return 0.0F;
         }
@@ -61,8 +61,8 @@ public class AngleCompassProperty implements IItemPropertyGetter {
         }
         
         double rotation;
-        if (currentEntity instanceof ItemFrameEntity) {
-            rotation = getRotation((ItemFrameEntity) currentEntity);
+        if (currentEntity instanceof EntityItemFrame) {
+            rotation = getRotation((EntityItemFrame) currentEntity);
         } else {
             rotation = getRotation(currentEntity);
         }
@@ -72,12 +72,12 @@ public class AngleCompassProperty implements IItemPropertyGetter {
         return (float) modulo;
     }
     
-    private double getRotation(ItemFrameEntity itemFrameEntity) {
-        Direction direction = itemFrameEntity.getHorizontalFacing();
+    private double getRotation(EntityItemFrame itemFrameEntity) {
+        EnumFacing direction = itemFrameEntity.getHorizontalFacing();
         double entityRotation;
-        if (direction == Direction.UP) {
+        if (direction == EnumFacing.UP) {
             entityRotation = 0.0D;
-        } else if (direction == Direction.DOWN) {
+        } else if (direction == EnumFacing.DOWN) {
             entityRotation = 180.0D;
         } else {
             entityRotation = direction.getHorizontalIndex() * 90;

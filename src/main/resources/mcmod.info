@@ -1,0 +1,21 @@
+[
+  {
+    "modid": "northerncompass",
+    "name": "NorthernCompass",
+    "description": "NorthernCompass\nSource - https://github.com/LXGaming/NorthernCompass",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://lxgaming.github.io/",
+    "updateUrl": "",
+    "updateJSON": "",
+    "authorList": ["LX_Gaming"],
+    "credits": "",
+    "logoFile": "lxgaming.png",
+    "screenshots": [],
+    "parent": "",
+    "useDependencyInformation": false,
+    "requiredMods": [],
+    "dependencies": [],
+    "dependants": []
+  }
+]
