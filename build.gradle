@@ -21,10 +21,10 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "NorthernCompass"
-version = "1.14.4-1.0.0"
+version = "1.15.2-1.0.0"
 
 minecraft {
-    mappings(channel: "snapshot", version: "20190719-1.14.3")
+    mappings(channel: "snapshot", version: "20200514-1.15.1")
     runs {
         client = {
             properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
@@ -56,7 +56,7 @@ repositories {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.14.4-28.1.0")
+    minecraft("net.minecraftforge:forge:1.15.2-31.2.21")
 }
 
 compileJava {

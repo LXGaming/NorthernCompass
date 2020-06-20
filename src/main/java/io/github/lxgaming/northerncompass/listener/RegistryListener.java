@@ -28,7 +28,7 @@ public class RegistryListener {
     
     @SubscribeEvent
     public void registerItem(RegistryEvent.Register<Item> event) {
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () -> {
             Items.COMPASS.addPropertyOverride(AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty());
         });
     }
