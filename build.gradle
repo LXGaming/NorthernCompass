@@ -67,7 +67,7 @@ compileJava {
 
 processResources {
     from("LICENSE")
-    rename("LICENSE", "LICENSE-" + archivesBaseName)
+    rename("LICENSE", "LICENSE-${archivesBaseName}")
 
     from (sourceSets.main.resources.srcDirs) {
         include("META-INF/mods.toml")
