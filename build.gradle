@@ -21,7 +21,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "NorthernCompass"
-version = "1.15.2-1.0.0"
+version = "1.15.2-1.0.1"
 
 minecraft {
     mappings(channel: "snapshot", version: "20200514-1.15.1")
@@ -62,6 +62,20 @@ dependencies {
 compileJava {
     doFirst {
         source = filterJava.outputs
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "Implementation-Title": "NorthernCompass",
+                "Implementation-Vendor": "LX_Gaming",
+                "Implementation-Version": "${project.version}",
+                "Specification-Title": "northerncompass",
+                "Specification-Vendor": "LX_Gaming",
+                "Specification-Version": "1"
+        )
     }
 }
 
