@@ -17,11 +17,17 @@
 package io.github.lxgaming.northerncompass.executor;
 
 import io.github.lxgaming.northerncompass.item.property.AngleCompassProperty;
+import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.Items;
 
 public class ClientExecutor {
     
     public static void onRegisterItem() {
-        Items.COMPASS.addPropertyOverride(AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty());
+        // getPropertyGetter
+        IItemPropertyGetter angleCompassProperty = ItemModelsProperties.func_239417_a_(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION);
+        
+        // addPropertyOverride
+        ItemModelsProperties.func_239418_a_(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty(angleCompassProperty));
     }
 }

@@ -16,9 +16,11 @@
 
 package io.github.lxgaming.northerncompass.item.property;
 
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemFrameEntity;
+import net.minecraft.item.CompassItem;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
@@ -31,9 +33,19 @@ import javax.annotation.Nullable;
 public class AngleCompassProperty implements IItemPropertyGetter {
     
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("angle");
+    private final IItemPropertyGetter angleCompassProperty;
+    
+    public AngleCompassProperty(IItemPropertyGetter angleCompassProperty) {
+        this.angleCompassProperty = angleCompassProperty;
+    }
     
     @Override
-    public float call(ItemStack itemStack, @Nullable World world, @Nullable LivingEntity entity) {
+    public float call(ItemStack itemStack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
+        // hasLodestoneData
+        if (CompassItem.func_234670_d_(itemStack)) {
+            return angleCompassProperty.call(itemStack, world, entity);
+        }
+        
         if (entity == null && !itemStack.isOnItemFrame()) {
             return 0.0F;
         }
