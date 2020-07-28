@@ -2,17 +2,23 @@ buildscript {
     repositories {
         jcenter()
         maven {
+            name = "gradle"
+            url = "https://plugins.gradle.org/m2"
+        }
+        maven {
             name = "minecraftforge"
             url = "https://files.minecraftforge.net/maven"
         }
     }
 
     dependencies {
+        classpath("gradle.plugin.net.kyori:blossom:1.1.0")
         classpath("net.minecraftforge.gradle:ForgeGradle:3.+")
     }
 }
 
 apply plugin: "java"
+apply plugin: "net.kyori.blossom"
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "signing"
 
@@ -22,6 +28,10 @@ targetCompatibility = 1.8
 group = "io.github.lxgaming"
 archivesBaseName = "NorthernCompass"
 version = "1.16.1-1.0.1"
+
+blossom {
+    replaceToken("@version@", version)
+}
 
 minecraft {
     mappings(channel: "snapshot", version: "20200514-1.16")
@@ -48,7 +58,6 @@ configurations {
     }
 
     build.dependsOn("signJar")
-    compileJava.dependsOn("filterJava")
 }
 
 repositories {
@@ -57,12 +66,6 @@ repositories {
 
 dependencies {
     minecraft("net.minecraftforge:forge:1.16.1-32.0.38")
-}
-
-compileJava {
-    doFirst {
-        source = filterJava.outputs
-    }
 }
 
 jar {
@@ -87,13 +90,6 @@ processResources {
         include("META-INF/mods.toml")
         expand("version": version)
     }
-}
-
-task filterJava(type: Sync) {
-    from(sourceSets.main.java)
-    into("$buildDir/tmp/$name")
-
-    expand(version: version)
 }
 
 task signJar {

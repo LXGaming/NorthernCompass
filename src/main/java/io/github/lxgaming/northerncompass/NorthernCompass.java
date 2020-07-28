@@ -28,7 +28,7 @@ public class NorthernCompass {
     
     public static final String ID = "northerncompass";
     public static final String NAME = "NorthernCompass";
-    public static final String VERSION = "${version}";
+    public static final String VERSION = "@version@";
     
     private static NorthernCompass instance;
     private final Logger logger;
