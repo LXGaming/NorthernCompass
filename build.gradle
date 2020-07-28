@@ -27,7 +27,7 @@ targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "NorthernCompass"
-version = "1.16.1-1.0.1"
+version = "1.16.1-1.0.2"
 
 blossom {
     replaceToken("@version@", version)
