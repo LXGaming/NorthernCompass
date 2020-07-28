@@ -34,7 +34,7 @@ blossom {
 }
 
 minecraft {
-    mappings(channel: "snapshot", version: "20200514-1.16")
+    mappings(channel: "snapshot", version: "20200723-1.16.1")
     runs {
         client = {
             properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
@@ -65,7 +65,7 @@ repositories {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.16.1-32.0.38")
+    minecraft("net.minecraftforge:forge:1.16.1-32.0.92")
 }
 
 jar {
