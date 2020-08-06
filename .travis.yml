@@ -20,7 +20,7 @@ before_install:
 install: skip
 
 script:
-  - ./gradlew clean build --refresh-dependencies
+  - ./gradlew clean build --console=plain --refresh-dependencies
 
 notifications:
   email: false
