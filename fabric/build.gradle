@@ -1,0 +1,102 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "gradle"
+            url = "https://plugins.gradle.org/m2"
+        }
+        maven {
+            name = "fabricmc"
+            url = "https://maven.fabricmc.net/"
+        }
+    }
+
+    dependencies {
+        classpath("gradle.plugin.net.kyori:blossom:1.1.0")
+        classpath("net.fabricmc:fabric-loom:0.4-SNAPSHOT")
+    }
+}
+
+apply plugin: "fabric-loom"
+apply plugin: "java"
+apply plugin: "net.kyori.blossom"
+apply plugin: "signing"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group = "io.github.lxgaming"
+archivesBaseName = "NorthernCompass-Fabric"
+version = version
+
+blossom {
+    replaceToken("@version@", version)
+}
+
+minecraft {
+    refmapName = "mixins.northerncompass.refmap.json"
+}
+
+configurations {
+    provided {
+        compile.extendsFrom(provided)
+    }
+
+    build.dependsOn("signJar")
+}
+
+repositories {
+    jcenter()
+    maven {
+        name = "fabricmc"
+        url = "https://maven.fabricmc.net/"
+    }
+}
+
+dependencies {
+    minecraft("com.mojang:minecraft:1.16.1")
+    mappings("net.fabricmc:yarn:1.16.1+build.21:v2")
+    modImplementation("net.fabricmc:fabric-loader:0.9.0+build.204")
+}
+
+processResources {
+    from("LICENSE")
+    rename("LICENSE", "LICENSE-${archivesBaseName}")
+
+    from (sourceSets.main.resources.srcDirs) {
+        include("fabric.mod.json")
+        expand("version": version)
+    }
+}
+
+task signJar {
+    doFirst {
+        if (!project.hasProperty("signing.keyStorePath") || !project.hasProperty("signing.secretKeyRingFile")) {
+            project.logger.warn("========== [WARNING] ==========")
+            project.logger.warn("")
+            project.logger.warn("   This build is not signed!   ")
+            project.logger.warn("")
+            project.logger.warn("========== [WARNING] ==========")
+            throw new StopExecutionException()
+        }
+    }
+
+    doLast {
+        configurations.archives.allArtifacts.files.each {
+            ant.signjar(
+                jar: it,
+                alias: project.property("signing.alias"),
+                storepass: project.property("signing.keyStorePassword"),
+                keystore: project.property("signing.keyStorePath"),
+                keypass: project.property("signing.keyStorePassword"),
+                preservelastmodified: project.property("signing.preserveLastModified"),
+                tsaurl: project.property("signing.timestampAuthority"),
+                digestalg: project.property("signing.digestAlgorithm")
+            )
+            project.logger.lifecycle("JAR Signed: " + it.name)
+
+            signing.sign(it)
+            project.logger.lifecycle("PGP Signed: " + it.name)
+        }
+    }
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "northerncompass",
+  "name": "NorthernCompass",
+  "version": "${version}",
+  "description": "",
+  "authors": [
+    "LX_Gaming"
+  ],
+  "license": "Apache-2.0",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "io.github.lxgaming.northerncompass.NorthernCompass"
+    ]
+  },
+  "mixins": [
+    "mixins.northerncompass.core.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "minecraft": "1.16.x"
+  }
+}
