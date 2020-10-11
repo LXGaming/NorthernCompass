@@ -17,9 +17,9 @@
 package io.github.lxgaming.northerncompass;
 
 import io.github.lxgaming.northerncompass.listener.RegistryListener;
-import net.minecraftforge.fml.StartupMessageManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.progress.StartupMessageManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
