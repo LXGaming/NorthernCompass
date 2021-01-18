@@ -83,8 +83,8 @@ jar {
 }
 
 processResources {
-    from("LICENSE")
-    rename("LICENSE", "LICENSE-${archivesBaseName}")
+    from("../LICENSE")
+    rename("LICENSE", "LICENSE-NorthernCompass")
 
     from (sourceSets.main.resources.srcDirs) {
         include("META-INF/mods.toml")

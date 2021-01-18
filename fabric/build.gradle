@@ -60,8 +60,8 @@ dependencies {
 }
 
 processResources {
-    from("LICENSE")
-    rename("LICENSE", "LICENSE-${archivesBaseName}")
+    from("../LICENSE")
+    rename("LICENSE", "LICENSE-NorthernCompass")
 
     from (sourceSets.main.resources.srcDirs) {
         include("fabric.mod.json")
