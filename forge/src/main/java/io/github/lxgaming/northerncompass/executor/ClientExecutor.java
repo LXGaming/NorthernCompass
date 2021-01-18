@@ -26,8 +26,6 @@ public class ClientExecutor {
     public static void onRegisterItem() {
         // getPropertyGetter
         IItemPropertyGetter angleCompassProperty = ItemModelsProperties.func_239417_a_(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION);
-        
-        // addPropertyOverride
-        ItemModelsProperties.func_239418_a_(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty(angleCompassProperty));
+        ItemModelsProperties.registerProperty(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty(angleCompassProperty));
     }
 }

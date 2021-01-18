@@ -13,7 +13,7 @@ buildscript {
 
     dependencies {
         classpath("gradle.plugin.net.kyori:blossom:1.1.0")
-        classpath("net.fabricmc:fabric-loom:0.4-SNAPSHOT")
+        classpath("net.fabricmc:fabric-loom:0.6.9")
     }
 }
 
@@ -54,9 +54,9 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:1.16.3")
-    mappings("net.fabricmc:yarn:1.16.3+build.31:v2")
-    modImplementation("net.fabricmc:fabric-loader:0.10.1+build.209")
+    minecraft("com.mojang:minecraft:1.16.5")
+    mappings("net.fabricmc:yarn:1.16.5+build.1")
+    modImplementation("net.fabricmc:fabric-loader:0.11.1")
 }
 
 processResources {
