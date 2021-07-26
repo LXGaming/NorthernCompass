@@ -1,19 +1,19 @@
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
         maven {
             name = "gradle"
             url = "https://plugins.gradle.org/m2"
         }
         maven {
             name = "minecraftforge"
-            url = "https://files.minecraftforge.net/maven"
+            url = "https://maven.minecraftforge.net/"
         }
     }
 
     dependencies {
-        classpath("gradle.plugin.net.kyori:blossom:1.1.0")
-        classpath("net.minecraftforge.gradle:ForgeGradle:3.+")
+        classpath("net.kyori:blossom:1.3.0")
+        classpath("net.minecraftforge.gradle:ForgeGradle:5.1.+")
     }
 }
 
@@ -22,50 +22,51 @@ apply plugin: "net.kyori.blossom"
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "signing"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 group = "io.github.lxgaming"
 archivesBaseName = "NorthernCompass-Forge"
-version = version
 
 blossom {
     replaceToken("@version@", version)
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(16)
+    }
+}
+
 minecraft {
-    mappings(channel: "snapshot", version: "20201028-1.16.3")
+    mappings(channel: "official", version: "1.17.1")
     runs {
         client = {
             properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
             properties("forge.logging.console.level": "debug")
-            workingDirectory(project.file("run").canonicalPath)
             source(sourceSets.main)
+            workingDirectory(project.file("run"))
         }
 
         server = {
             properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
             properties("forge.logging.console.level": "debug")
-            workingDirectory(project.file("run").canonicalPath)
             source(sourceSets.main)
+            workingDirectory(project.file("run"))
         }
     }
 }
 
 configurations {
-    provided {
-        compile.extendsFrom(provided)
-    }
-
-    build.dependsOn("signJar")
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.16.5-36.0.1")
+    minecraft("net.minecraftforge:forge:1.17.1-37.0.9")
+}
+
+build {
+    build.dependsOn("signJar")
 }
 
 jar {
@@ -83,6 +84,7 @@ jar {
 }
 
 processResources {
+    duplicatesStrategy(DuplicatesStrategy.INCLUDE)
     from("../LICENSE")
     rename("LICENSE", "LICENSE-NorthernCompass")
 

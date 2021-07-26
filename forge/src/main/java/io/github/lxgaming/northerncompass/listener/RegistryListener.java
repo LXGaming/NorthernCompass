@@ -17,7 +17,7 @@
 package io.github.lxgaming.northerncompass.listener;
 
 import io.github.lxgaming.northerncompass.executor.ClientExecutor;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

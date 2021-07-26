@@ -17,11 +17,11 @@
 package io.github.lxgaming.northerncompass;
 
 import io.github.lxgaming.northerncompass.item.property.AngleCompassProperty;
-import io.github.lxgaming.northerncompass.mixin.core.client.item.ModelPredicateProviderRegistryAccessor;
+import io.github.lxgaming.northerncompass.mixin.core.client.renderer.item.ItemPropertiesAccessor;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.client.item.ModelPredicateProvider;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
-import net.minecraft.item.Items;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.world.item.Items;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,8 +41,8 @@ public class NorthernCompass implements ClientModInitializer {
     
     @Override
     public void onInitializeClient() {
-        ModelPredicateProvider angleCompassProperty = ModelPredicateProviderRegistry.get(Items.COMPASS, AngleCompassProperty.IDENTIFIER);
-        ModelPredicateProviderRegistryAccessor.accessor$register(Items.COMPASS, AngleCompassProperty.IDENTIFIER, new AngleCompassProperty(angleCompassProperty));
+        ClampedItemPropertyFunction angleCompassProperty = (ClampedItemPropertyFunction) ItemProperties.getProperty(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION);
+        ItemPropertiesAccessor.accessor$register(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty(angleCompassProperty));
         getLogger().info("{} v{} Initialized", NorthernCompass.NAME, NorthernCompass.VERSION);
     }
     

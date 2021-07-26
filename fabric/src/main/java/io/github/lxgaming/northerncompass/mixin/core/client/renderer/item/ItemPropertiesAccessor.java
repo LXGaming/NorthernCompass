@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Alex Thomson
+ * Copyright 2021 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.northerncompass.mixin.core.client.item;
+package io.github.lxgaming.northerncompass.mixin.core.client.renderer.item;
 
-import net.minecraft.client.item.ModelPredicateProvider;
-import net.minecraft.client.item.ModelPredicateProviderRegistry;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-@Mixin(value = ModelPredicateProviderRegistry.class)
-public interface ModelPredicateProviderRegistryAccessor {
+@Mixin(value = ItemProperties.class)
+public interface ItemPropertiesAccessor {
     
     @Invoker("register")
-    static void accessor$register(Item item, Identifier id, ModelPredicateProvider provider) {
+    static void accessor$register(Item item, ResourceLocation resourceLocation, ClampedItemPropertyFunction clampedItemPropertyFunction) {
         throw new IllegalStateException("Untransformed Accessor!");
     }
 }

@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
         maven {
             name = "gradle"
             url = "https://plugins.gradle.org/m2"
@@ -12,8 +12,8 @@ buildscript {
     }
 
     dependencies {
-        classpath("gradle.plugin.net.kyori:blossom:1.1.0")
-        classpath("net.fabricmc:fabric-loom:0.6.9")
+        classpath("net.kyori:blossom:1.3.0")
+        classpath("net.fabricmc:fabric-loom:0.9.9")
     }
 }
 
@@ -21,9 +21,6 @@ apply plugin: "fabric-loom"
 apply plugin: "java"
 apply plugin: "net.kyori.blossom"
 apply plugin: "signing"
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 group = "io.github.lxgaming"
 archivesBaseName = "NorthernCompass-Fabric"
@@ -33,20 +30,21 @@ blossom {
     replaceToken("@version@", version)
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(16)
+    }
+}
+
 minecraft {
     refmapName = "mixins.northerncompass.refmap.json"
 }
 
 configurations {
-    provided {
-        compile.extendsFrom(provided)
-    }
-
-    build.dependsOn("signJar")
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
     maven {
         name = "fabricmc"
         url = "https://maven.fabricmc.net/"
@@ -54,12 +52,17 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:1.16.5")
-    mappings("net.fabricmc:yarn:1.16.5+build.1")
-    modImplementation("net.fabricmc:fabric-loader:0.11.1")
+    minecraft("com.mojang:minecraft:1.17.1")
+    mappings minecraft.officialMojangMappings()
+    modImplementation("net.fabricmc:fabric-loader:0.11.6")
+}
+
+build {
+    dependsOn("signJar")
 }
 
 processResources {
+    duplicatesStrategy(DuplicatesStrategy.INCLUDE)
     from("../LICENSE")
     rename("LICENSE", "LICENSE-NorthernCompass")
 
