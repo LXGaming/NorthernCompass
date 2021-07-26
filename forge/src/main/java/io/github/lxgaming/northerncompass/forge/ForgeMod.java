@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Alex Thomson
+ * Copyright 2021 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,40 +14,23 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.northerncompass;
+package io.github.lxgaming.northerncompass.forge;
 
-import io.github.lxgaming.northerncompass.listener.RegistryListener;
+import io.github.lxgaming.northerncompass.common.NorthernCompass;
+import io.github.lxgaming.northerncompass.forge.listener.RegistryListener;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.progress.StartupMessageManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 @Mod(value = NorthernCompass.ID)
-public class NorthernCompass {
+public class ForgeMod extends NorthernCompass {
     
-    public static final String ID = "northerncompass";
-    public static final String NAME = "NorthernCompass";
-    public static final String VERSION = "@version@";
-    
-    private static NorthernCompass instance;
-    private final Logger logger;
-    
-    public NorthernCompass() {
-        instance = this;
-        this.logger = LogManager.getLogger(NorthernCompass.NAME);
+    public ForgeMod() {
+        super();
         
         FMLJavaModLoadingContext.get().getModEventBus().register(new RegistryListener());
         
         StartupMessageManager.addModMessage(String.format("%s v%s Initialized", NorthernCompass.NAME, NorthernCompass.VERSION));
         getLogger().info("{} v{} Initialized", NorthernCompass.NAME, NorthernCompass.VERSION);
-    }
-    
-    public static NorthernCompass getInstance() {
-        return instance;
-    }
-    
-    public Logger getLogger() {
-        return logger;
     }
 }

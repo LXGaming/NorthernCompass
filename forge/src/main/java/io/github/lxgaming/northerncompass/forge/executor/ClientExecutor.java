@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Alex Thomson
+ * Copyright 2020 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.northerncompass.mixin.core.client.renderer.item;
+package io.github.lxgaming.northerncompass.forge.executor;
 
+import io.github.lxgaming.northerncompass.common.client.renderer.item.AngleCompassProperty;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Invoker;
+import net.minecraft.world.item.Items;
 
-@Mixin(value = ItemProperties.class)
-public interface ItemPropertiesAccessor {
+public class ClientExecutor {
     
-    @Invoker("register")
-    static void accessor$register(Item item, ResourceLocation resourceLocation, ClampedItemPropertyFunction clampedItemPropertyFunction) {
-        throw new IllegalStateException("Untransformed Accessor!");
+    public static void onRegisterItem() {
+        ClampedItemPropertyFunction angleCompassProperty = (ClampedItemPropertyFunction) ItemProperties.getProperty(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION);
+        ItemProperties.register(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty(angleCompassProperty));
     }
 }

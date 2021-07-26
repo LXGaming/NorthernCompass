@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.northerncompass.listener;
+package io.github.lxgaming.northerncompass.forge.listener;
 
-import io.github.lxgaming.northerncompass.executor.ClientExecutor;
+import io.github.lxgaming.northerncompass.forge.executor.ClientExecutor;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.RegistryEvent;

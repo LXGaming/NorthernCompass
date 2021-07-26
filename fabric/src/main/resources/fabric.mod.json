@@ -11,7 +11,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "io.github.lxgaming.northerncompass.NorthernCompass"
+      "io.github.lxgaming.northerncompass.fabric.FabricMod"
     ]
   },
   "mixins": [

@@ -2,33 +2,20 @@ buildscript {
     repositories {
         mavenCentral()
         maven {
-            name = "gradle"
-            url = "https://plugins.gradle.org/m2"
-        }
-        maven {
             name = "fabricmc"
             url = "https://maven.fabricmc.net/"
         }
     }
 
     dependencies {
-        classpath("net.kyori:blossom:1.3.0")
         classpath("net.fabricmc:fabric-loom:0.9.9")
     }
 }
 
+apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: "fabric-loom"
-apply plugin: "java"
-apply plugin: "net.kyori.blossom"
-apply plugin: "signing"
 
-group = "io.github.lxgaming"
 archivesBaseName = "NorthernCompass-Fabric"
-version = version
-
-blossom {
-    replaceToken("@version@", version)
-}
 
 java {
     toolchain {
@@ -41,10 +28,12 @@ minecraft {
 }
 
 configurations {
+    shadow {
+        runtimeOnly.extendsFrom(shadow)
+    }
 }
 
 repositories {
-    mavenCentral()
     maven {
         name = "fabricmc"
         url = "https://maven.fabricmc.net/"
@@ -52,6 +41,7 @@ repositories {
 }
 
 dependencies {
+    shadow(project(path: ":northerncompass-common"))
     minecraft("com.mojang:minecraft:1.17.1")
     mappings minecraft.officialMojangMappings()
     modImplementation("net.fabricmc:fabric-loader:0.11.6")
@@ -61,45 +51,28 @@ build {
     dependsOn("signJar")
 }
 
+compileJava {
+    dependsOn(":northerncompass-common:build")
+}
+
+jar {
+    enabled = false
+    dependsOn("shadowJar")
+}
+
 processResources {
     duplicatesStrategy(DuplicatesStrategy.INCLUDE)
-    from("../LICENSE")
-    rename("LICENSE", "LICENSE-NorthernCompass")
-
     from (sourceSets.main.resources.srcDirs) {
         include("fabric.mod.json")
         expand("version": version)
     }
 }
 
-task signJar {
-    doFirst {
-        if (!project.hasProperty("signing.keyStorePath") || !project.hasProperty("signing.secretKeyRingFile")) {
-            project.logger.warn("========== [WARNING] ==========")
-            project.logger.warn("")
-            project.logger.warn("   This build is not signed!   ")
-            project.logger.warn("")
-            project.logger.warn("========== [WARNING] ==========")
-            throw new StopExecutionException()
-        }
-    }
+remapJar {
+    dependsOn("shadowJar")
+}
 
-    doLast {
-        configurations.archives.allArtifacts.files.each {
-            ant.signjar(
-                jar: it,
-                alias: project.property("signing.alias"),
-                storepass: project.property("signing.keyStorePassword"),
-                keystore: project.property("signing.keyStorePath"),
-                keypass: project.property("signing.keyStorePassword"),
-                preservelastmodified: project.property("signing.preserveLastModified"),
-                tsaurl: project.property("signing.timestampAuthority"),
-                digestalg: project.property("signing.digestAlgorithm")
-            )
-            project.logger.lifecycle("JAR Signed: " + it.name)
-
-            signing.sign(it)
-            project.logger.lifecycle("PGP Signed: " + it.name)
-        }
-    }
+shadowJar {
+    archiveClassifier.set("dev")
+    configurations = [project.configurations.shadow]
 }

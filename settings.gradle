@@ -1,2 +1,11 @@
+include "common"
 include "fabric"
 include "forge"
+
+[
+    "common",
+    "fabric",
+    "forge"
+].each {
+    findProject(":$it")?.name = "northerncompass-$it"
+}

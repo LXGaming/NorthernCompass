@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Alex Thomson
+ * Copyright 2021 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,43 +14,22 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.northerncompass;
+package io.github.lxgaming.northerncompass.fabric;
 
-import io.github.lxgaming.northerncompass.item.property.AngleCompassProperty;
-import io.github.lxgaming.northerncompass.mixin.core.client.renderer.item.ItemPropertiesAccessor;
+import io.github.lxgaming.northerncompass.common.NorthernCompass;
+import io.github.lxgaming.northerncompass.common.client.renderer.item.AngleCompassProperty;
+import io.github.lxgaming.northerncompass.fabric.mixin.core.client.renderer.item.ItemPropertiesAccessor;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.Items;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-public class NorthernCompass implements ClientModInitializer {
-    
-    public static final String ID = "northerncompass";
-    public static final String NAME = "NorthernCompass";
-    public static final String VERSION = "@version@";
-    
-    private static NorthernCompass instance;
-    private final Logger logger;
-    
-    public NorthernCompass() {
-        instance = this;
-        this.logger = LogManager.getLogger(NorthernCompass.NAME);
-    }
+public class FabricMod extends NorthernCompass implements ClientModInitializer {
     
     @Override
     public void onInitializeClient() {
         ClampedItemPropertyFunction angleCompassProperty = (ClampedItemPropertyFunction) ItemProperties.getProperty(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION);
         ItemPropertiesAccessor.accessor$register(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty(angleCompassProperty));
         getLogger().info("{} v{} Initialized", NorthernCompass.NAME, NorthernCompass.VERSION);
-    }
-    
-    public static NorthernCompass getInstance() {
-        return instance;
-    }
-    
-    public Logger getLogger() {
-        return logger;
     }
 }

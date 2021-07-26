@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Alex Thomson
+ * Copyright 2021 Alex Thomson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.northerncompass.item.property;
+package io.github.lxgaming.northerncompass.common.client.renderer.item;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
@@ -27,7 +27,8 @@ import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.CompassItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class AngleCompassProperty implements ClampedItemPropertyFunction {
     

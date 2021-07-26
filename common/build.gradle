@@ -1,0 +1,37 @@
+plugins {
+    id "java"
+    id "net.kyori.blossom"
+    id "org.spongepowered.gradle.vanilla"
+}
+
+group = "io.github.lxgaming"
+archivesBaseName = "NorthernCompass-Common"
+
+blossom {
+    replaceToken("@version@", version)
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(16)
+    }
+}
+
+minecraft {
+    version("1.17.1")
+}
+
+configurations {
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+processResources {
+    from("../LICENSE")
+    rename("LICENSE", "LICENSE-NorthernCompass")
+}
