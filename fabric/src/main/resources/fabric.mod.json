@@ -7,6 +7,11 @@
   "authors": [
     "LX_Gaming"
   ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/northerncompass",
+    "sources": "https://github.com/LXGaming/NorthernCompass",
+    "issues": "https://github.com/LXGaming/NorthernCompass/issues"
+	},
   "license": "Apache-2.0",
   "environment": "*",
   "entrypoints": {
