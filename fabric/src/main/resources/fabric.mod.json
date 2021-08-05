@@ -3,7 +3,7 @@
   "id": "northerncompass",
   "name": "NorthernCompass",
   "version": "${version}",
-  "description": "",
+  "description": "Makes the Minecraft compass point north",
   "authors": [
     "LX_Gaming"
   ],
@@ -11,8 +11,9 @@
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/northerncompass",
     "sources": "https://github.com/LXGaming/NorthernCompass",
     "issues": "https://github.com/LXGaming/NorthernCompass/issues"
-	},
+  },
   "license": "Apache-2.0",
+  "icon": "assets/northerncompass/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
