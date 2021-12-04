@@ -17,12 +17,6 @@ apply plugin: "net.minecraftforge.gradle"
 
 archivesBaseName = "NorthernCompass-Forge"
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(16)
-    }
-}
-
 minecraft {
     mappings(channel: "official", version: "1.17.1")
     runs {
@@ -43,8 +37,8 @@ minecraft {
 }
 
 configurations {
-    shadow {
-        runtimeOnly.extendsFrom(shadow)
+    compileJar {
+        implementation.extendsFrom(compileJar)
     }
 }
 
@@ -52,7 +46,7 @@ repositories {
 }
 
 dependencies {
-    shadow(project(path: ":northerncompass-common"))
+    compileJar(project(path: ":northerncompass-common"))
     minecraft("net.minecraftforge:forge:1.17.1-37.0.9")
 }
 
@@ -63,7 +57,6 @@ build {
 compileJava {
     dependsOn(":northerncompass-common:build")
 }
-
 
 jar {
     enabled = false
@@ -91,5 +84,5 @@ processResources {
 
 shadowJar {
     archiveClassifier.set(null)
-    configurations = [project.configurations.shadow]
+    configurations = [project.configurations.compileJar]
 }
