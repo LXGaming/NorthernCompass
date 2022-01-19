@@ -51,7 +51,7 @@ dependencies {
 }
 
 build {
-    build.dependsOn("signJar")
+    dependsOn("signJar")
 }
 
 compileJava {
