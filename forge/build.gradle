@@ -18,19 +18,20 @@ apply plugin: "net.minecraftforge.gradle"
 archivesBaseName = "NorthernCompass-Forge"
 
 minecraft {
-    mappings(channel: "official", version: "1.18")
+    mappings(channel: "official", version: "1.18.1")
     runs {
         client = {
-            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
             properties("forge.logging.console.level": "debug")
-            source(sourceSets.main)
+            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
+            singleInstance(true)
             workingDirectory(project.file("run"))
         }
 
         server = {
-            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
+            args("nogui")
             properties("forge.logging.console.level": "debug")
-            source(sourceSets.main)
+            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
+            singleInstance(true)
             workingDirectory(project.file("run"))
         }
     }
@@ -47,7 +48,7 @@ repositories {
 
 dependencies {
     compileJar(project(path: ":northerncompass-common"))
-    minecraft("net.minecraftforge:forge:1.18-38.0.14")
+    minecraft("net.minecraftforge:forge:1.18.1-39.0.44")
 }
 
 build {
