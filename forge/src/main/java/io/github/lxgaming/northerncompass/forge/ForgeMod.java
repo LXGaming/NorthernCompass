@@ -17,8 +17,10 @@
 package io.github.lxgaming.northerncompass.forge;
 
 import io.github.lxgaming.northerncompass.common.NorthernCompass;
-import io.github.lxgaming.northerncompass.forge.listener.RegistryListener;
+import io.github.lxgaming.northerncompass.forge.executor.ClientExecutor;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.progress.StartupMessageManager;
 
@@ -28,9 +30,14 @@ public class ForgeMod extends NorthernCompass {
     public ForgeMod() {
         super();
         
-        FMLJavaModLoadingContext.get().getModEventBus().register(new RegistryListener());
+        FMLJavaModLoadingContext.get().getModEventBus().register(this);
         
         StartupMessageManager.addModMessage(String.format("%s v%s Initialized", NorthernCompass.NAME, NorthernCompass.VERSION));
         getLogger().info("{} v{} Initialized", NorthernCompass.NAME, NorthernCompass.VERSION);
+    }
+    
+    @SubscribeEvent
+    public void onClientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(ClientExecutor::onRegisterItem);
     }
 }
