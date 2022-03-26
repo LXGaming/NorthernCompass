@@ -26,7 +26,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.CompassItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
@@ -57,17 +56,6 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
         }
         
         if (currentEntity == null) {
-            return 0.0F;
-        }
-        
-        Level currentLevel;
-        if (level != null) {
-            currentLevel = level;
-        } else {
-            currentLevel = currentEntity.level;
-        }
-        
-        if (currentLevel == null) {
             return 0.0F;
         }
         
