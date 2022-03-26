@@ -18,7 +18,7 @@ apply plugin: "net.minecraftforge.gradle"
 archivesBaseName = "NorthernCompass-Forge"
 
 minecraft {
-    mappings(channel: "official", version: "1.18.1")
+    mappings(channel: "official", version: "1.18.2")
     runs {
         client = {
             properties("forge.logging.console.level": "debug")
@@ -48,7 +48,7 @@ repositories {
 
 dependencies {
     compileJar(project(path: ":northerncompass-common"))
-    minecraft("net.minecraftforge:forge:1.18.1-39.0.44")
+    minecraft("net.minecraftforge:forge:1.18.2-40.0.32")
 }
 
 build {

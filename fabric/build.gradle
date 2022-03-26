@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("net.fabricmc:fabric-loom:0.10.+")
+        classpath("net.fabricmc:fabric-loom:0.11-SNAPSHOT")
     }
 }
 
@@ -38,9 +38,13 @@ repositories {
 
 dependencies {
     compileJar(project(path: ":northerncompass-common"))
-    minecraft("com.mojang:minecraft:1.18.1")
+    minecraft("com.mojang:minecraft:1.18.2")
     mappings loom.officialMojangMappings()
-    modImplementation("net.fabricmc:fabric-loader:0.12.+")
+    modImplementation("net.fabricmc:fabric-loader:0.13.3")
+}
+
+artifacts {
+    archives remapJar
 }
 
 build {
@@ -65,10 +69,11 @@ processResources {
 }
 
 remapJar {
-    dependsOn("shadowJar")
+    inputFile = shadowJar.getArchiveFile()
 }
 
 shadowJar {
     archiveClassifier.set("dev")
     configurations = [project.configurations.compileJar]
+    destinationDirectory = jar.getDestinationDirectory()
 }
