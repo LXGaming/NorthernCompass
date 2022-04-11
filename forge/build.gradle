@@ -48,7 +48,7 @@ repositories {
 
 dependencies {
     compileJar(project(path: ":northerncompass-common"))
-    minecraft("net.minecraftforge:forge:1.18.2-40.0.32")
+    minecraft("net.minecraftforge:forge:1.18.2-40.0.44")
 }
 
 build {
