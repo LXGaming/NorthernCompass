@@ -48,7 +48,7 @@ artifacts {
 }
 
 build {
-    dependsOn("signJar")
+    finalizedBy("signJar")
 }
 
 compileJava {
