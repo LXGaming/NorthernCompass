@@ -40,7 +40,7 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
     
     @Override
     public float unclampedCall(ItemStack itemStack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
-        if (CompassItem.isLodestoneCompass(itemStack)) {
+        if (angleCompassProperty != null && CompassItem.isLodestoneCompass(itemStack)) {
             return angleCompassProperty.unclampedCall(itemStack, level, entity, seed);
         }
         

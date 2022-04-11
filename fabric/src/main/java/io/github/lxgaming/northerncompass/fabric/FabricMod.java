@@ -29,6 +29,10 @@ public class FabricMod extends NorthernCompass implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClampedItemPropertyFunction angleCompassProperty = (ClampedItemPropertyFunction) ItemProperties.getProperty(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION);
+        if (angleCompassProperty == null) {
+            getLogger().warn("Compass Angle Property is unavailable");
+        }
+        
         ItemPropertiesAccessor.accessor$register(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty(angleCompassProperty));
         getLogger().info("{} v{} Initialized", NorthernCompass.NAME, NorthernCompass.VERSION);
     }
