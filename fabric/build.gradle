@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("net.fabricmc:fabric-loom:0.12-SNAPSHOT")
+        classpath("net.fabricmc:fabric-loom:0.13-SNAPSHOT")
     }
 }
 
@@ -38,9 +38,9 @@ repositories {
 
 dependencies {
     compileJar(project(path: ":northerncompass-common"))
-    minecraft("com.mojang:minecraft:1.19")
+    minecraft("com.mojang:minecraft:1.19.2")
     mappings loom.officialMojangMappings()
-    modImplementation("net.fabricmc:fabric-loader:0.14.7")
+    modImplementation("net.fabricmc:fabric-loader:0.14.10")
 }
 
 artifacts {
