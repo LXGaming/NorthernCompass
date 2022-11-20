@@ -1,62 +1,41 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            name = "minecraftforge"
-            url = "https://maven.minecraftforge.net/"
-        }
-    }
-
-    dependencies {
-        classpath("net.minecraftforge.gradle:ForgeGradle:5.1.+")
-    }
+plugins {
+    id "com.github.johnrengelman.shadow"
 }
-
-apply plugin: "com.github.johnrengelman.shadow"
-apply plugin: "net.minecraftforge.gradle"
 
 archivesBaseName = "NorthernCompass-Forge"
 
-minecraft {
-    mappings(channel: "official", version: "1.19.2")
-    runs {
-        client = {
-            properties("forge.logging.console.level": "debug")
-            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
-            singleInstance(true)
-            workingDirectory(project.file("run"))
-        }
-
-        server = {
-            args("nogui")
-            properties("forge.logging.console.level": "debug")
-            properties("forge.logging.markers": "SCAN,REGISTRIES,REGISTRYDUMP")
-            singleInstance(true)
-            workingDirectory(project.file("run"))
-        }
-    }
+architectury {
+    platformSetupLoomIde()
+    forge()
 }
 
 configurations {
-    compileJar {
-        implementation.extendsFrom(compileJar)
-    }
+    developmentForge.extendsFrom(common)
 }
 
 repositories {
+    maven {
+        name = "minecraftforge"
+        url = "https://maven.minecraftforge.net/"
+    }
 }
 
 dependencies {
-    compileJar(project(path: ":northerncompass-common"))
-    minecraft("net.minecraftforge:forge:1.19.2-43.1.52")
+    common(project(path: ":northerncompass-common", configuration: "namedElements")) {
+        transitive false
+    }
+    compileJar(project(path: ":northerncompass-common", configuration: "transformProductionForge")) {
+        transitive = false
+    }
+    forge("net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}")
+}
+
+artifacts {
+    signJar remapJar
 }
 
 build {
     finalizedBy("signJar")
-}
-
-compileJava {
-    dependsOn(":northerncompass-common:build")
 }
 
 jar {
@@ -83,7 +62,14 @@ processResources {
     }
 }
 
-shadowJar {
+remapJar {
     archiveClassifier.set(null)
+    inputFile = shadowJar.getArchiveFile()
+    dependsOn("shadowJar")
+}
+
+shadowJar {
+    archiveClassifier.set("dev")
     configurations = [project.configurations.compileJar]
+    destinationDirectory = jar.getDestinationDirectory()
 }

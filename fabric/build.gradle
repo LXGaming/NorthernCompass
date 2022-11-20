@@ -1,32 +1,16 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            name = "fabricmc"
-            url = "https://maven.fabricmc.net/"
-        }
-    }
-
-    dependencies {
-        classpath("net.fabricmc:fabric-loom:0.13-SNAPSHOT")
-    }
+plugins {
+    id "com.github.johnrengelman.shadow"
 }
-
-apply plugin: "com.github.johnrengelman.shadow"
-apply plugin: "fabric-loom"
 
 archivesBaseName = "NorthernCompass-Fabric"
 
-loom {
-    mixin {
-        defaultRefmapName = "mixins.northerncompass.refmap.json"
-    }
+architectury {
+    platformSetupLoomIde()
+    fabric()
 }
 
 configurations {
-    compileJar {
-        implementation.extendsFrom(compileJar)
-    }
+    developmentFabric.extendsFrom(common)
 }
 
 repositories {
@@ -37,27 +21,37 @@ repositories {
 }
 
 dependencies {
-    compileJar(project(path: ":northerncompass-common"))
-    minecraft("com.mojang:minecraft:1.19.2")
-    mappings loom.officialMojangMappings()
-    modImplementation("net.fabricmc:fabric-loader:0.14.10")
+    common(project(path: ":northerncompass-common", configuration: "namedElements")) {
+        transitive false
+    }
+    compileJar(project(path: ":northerncompass-common", configuration: "transformProductionFabric")) {
+        transitive false
+    }
+    modImplementation("net.fabricmc:fabric-loader:${fabricLoaderVersion}")
 }
 
 artifacts {
-    archives remapJar
+    signJar remapJar
 }
 
 build {
     finalizedBy("signJar")
 }
 
-compileJava {
-    dependsOn(":northerncompass-common:build")
-}
-
 jar {
     enabled = false
     dependsOn("shadowJar")
+    manifest {
+        attributes(
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "Implementation-Title": "NorthernCompass",
+            "Implementation-Vendor": "LX_Gaming",
+            "Implementation-Version": "${project.version}",
+            "Specification-Title": "northerncompass",
+            "Specification-Vendor": "LX_Gaming",
+            "Specification-Version": "1"
+        )
+    }
 }
 
 processResources {
@@ -69,7 +63,9 @@ processResources {
 }
 
 remapJar {
+    archiveClassifier.set(null)
     inputFile = shadowJar.getArchiveFile()
+    dependsOn("shadowJar")
 }
 
 shadowJar {

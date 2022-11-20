@@ -1,29 +1,27 @@
 plugins {
     id "java"
     id "net.kyori.blossom"
-    id "org.spongepowered.gradle.vanilla"
 }
 
 archivesBaseName = "NorthernCompass-Common"
+
+architectury {
+    common(platforms.split(","))
+}
 
 blossom {
     replaceToken("@version@", version)
 }
 
-minecraft {
-    version("1.19.2")
-}
-
-configurations {
-}
-
-repositories {
-}
-
 dependencies {
+    modImplementation("net.fabricmc:fabric-loader:${fabricLoaderVersion}")
 }
 
 processResources {
     from("../LICENSE")
     rename("LICENSE", "LICENSE-NorthernCompass")
+}
+
+remapJar {
+    enabled = false
 }

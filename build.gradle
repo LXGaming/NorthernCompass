@@ -1,27 +1,24 @@
-buildscript {
-    repositories {
-        maven {
-            name = "gradle"
-            url = "https://plugins.gradle.org/m2"
-        }
-        maven {
-            name = "spongepowered"
-            url = "https://repo.spongepowered.org/repository/maven-public"
-        }
-    }
-
-    dependencies {
-        classpath("gradle.plugin.com.github.johnrengelman:shadow:7.1.2")
-        classpath("net.kyori:blossom:1.3.1")
-        classpath("org.spongepowered:vanillagradle:0.2.+")
-    }
+plugins {
+    id "architectury-plugin" version "3.4-SNAPSHOT" apply false
+    id "com.github.johnrengelman.shadow" version "7.1.2" apply false
+    id "dev.architectury.loom" version "0.12.0-SNAPSHOT" apply false
+    id "net.kyori.blossom" version "1.3.1" apply false
 }
 
 subprojects {
+    apply plugin: "architectury-plugin"
+    apply plugin: "dev.architectury.loom"
     apply plugin: "java"
     apply plugin: "signing"
 
     group = "io.github.lxgaming"
+    version = "${minecraftVersion}-${version}"
+
+    architectury {
+        addCommonMarker = false
+        injectInjectables = false
+        minecraft = minecraftVersion
+    }
 
     java {
         toolchain {
@@ -29,8 +26,29 @@ subprojects {
         }
     }
 
+    loom {
+        silentMojangMappingsLicense()
+        mixin {
+            defaultRefmapName = "mixins.northerncompass.refmap.json"
+        }
+    }
+
+    configurations {
+        common
+        compileJar
+        signJar
+
+        compileClasspath.extendsFrom(common)
+        runtimeClasspath.extendsFrom(common)
+    }
+
     repositories {
         mavenCentral()
+    }
+
+    dependencies {
+        minecraft("com.mojang:minecraft:${minecraftVersion}")
+        mappings(loom.officialMojangMappings())
     }
 
     task signJar {
@@ -46,7 +64,7 @@ subprojects {
         }
 
         doLast {
-            configurations.archives.allArtifacts.files.each {
+            configurations.signJar.allArtifacts.files.each {
                 ant.signjar(
                         jar: it,
                         alias: project.property("signing.alias"),

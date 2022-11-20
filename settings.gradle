@@ -1,11 +1,26 @@
-include "common"
-include "fabric"
-include "forge"
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            name = "architectury"
+            url = "https://maven.architectury.dev/"
+        }
+        maven {
+            name = "fabricmc"
+            url = "https://maven.fabricmc.net/"
+        }
+        maven {
+            name = "minecraftforge"
+            url = "https://maven.minecraftforge.net/"
+        }
+    }
+}
 
 [
     "common",
     "fabric",
     "forge"
 ].each {
+    include(it)
     findProject(":$it")?.name = "northerncompass-$it"
 }
