@@ -20,12 +20,6 @@ subprojects {
         minecraft = minecraftVersion
     }
 
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
-        }
-    }
-
     loom {
         silentMojangMappingsLicense()
         mixin {
@@ -49,6 +43,11 @@ subprojects {
     dependencies {
         minecraft("com.mojang:minecraft:${minecraftVersion}")
         mappings(loom.officialMojangMappings())
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     task signJar {
