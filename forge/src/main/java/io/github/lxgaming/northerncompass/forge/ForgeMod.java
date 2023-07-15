@@ -19,10 +19,10 @@ package io.github.lxgaming.northerncompass.forge;
 import io.github.lxgaming.northerncompass.common.NorthernCompass;
 import io.github.lxgaming.northerncompass.forge.executor.ClientExecutor;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.StartupMessageManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.progress.StartupMessageManager;
 
 @Mod(value = NorthernCompass.ID)
 public class ForgeMod extends NorthernCompass {
