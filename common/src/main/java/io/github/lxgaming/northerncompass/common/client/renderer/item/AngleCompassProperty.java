@@ -26,8 +26,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.CompassItem;
 import net.minecraft.world.item.ItemStack;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class AngleCompassProperty implements ClampedItemPropertyFunction {
     
