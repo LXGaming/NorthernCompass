@@ -9,6 +9,10 @@ architectury {
     fabric()
 }
 
+loom {
+    refreshDeps(false)
+}
+
 configurations {
     developmentFabric.extendsFrom(common)
 }

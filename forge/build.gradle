@@ -9,6 +9,10 @@ architectury {
     forge()
 }
 
+loom {
+    refreshDeps(false)
+}
+
 configurations {
     developmentForge.extendsFrom(common)
 }
