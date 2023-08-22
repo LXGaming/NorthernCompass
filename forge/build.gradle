@@ -19,8 +19,8 @@ configurations {
 
 repositories {
     maven {
-        name = "minecraftforge"
-        url = "https://maven.minecraftforge.net/"
+        name = "neoforged"
+        url = "https://maven.neoforged.net/releases"
     }
 }
 
@@ -31,7 +31,7 @@ dependencies {
     compileJar(project(path: ":northerncompass-common", configuration: "transformProductionForge")) {
         transitive = false
     }
-    forge("net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}")
+    forge("net.neoforged:forge:${minecraftVersion}-${forgeVersion}")
 }
 
 artifacts {
