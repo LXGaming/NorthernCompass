@@ -23,12 +23,13 @@ import net.minecraftforge.fml.StartupMessageManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 @Mod(value = NorthernCompass.ID)
 public class ForgeMod extends NorthernCompass {
     
     public ForgeMod() {
-        super();
+        super(FMLPaths.CONFIGDIR.get().resolve(NorthernCompass.ID));
         
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
         
@@ -38,6 +39,8 @@ public class ForgeMod extends NorthernCompass {
     
     @SubscribeEvent
     public void onClientSetup(FMLClientSetupEvent event) {
+        load();
+        
         event.enqueueWork(ClientExecutor::onRegisterItem);
     }
 }

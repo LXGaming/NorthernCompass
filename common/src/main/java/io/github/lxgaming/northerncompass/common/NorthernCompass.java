@@ -16,8 +16,11 @@
 
 package io.github.lxgaming.northerncompass.common;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import io.github.lxgaming.northerncompass.common.configuration.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.nio.file.Path;
 
 public abstract class NorthernCompass {
     
@@ -27,10 +30,18 @@ public abstract class NorthernCompass {
     
     private static NorthernCompass instance;
     private final Logger logger;
+    private final Configuration configuration;
     
-    public NorthernCompass() {
+    public NorthernCompass(Path path) {
         instance = this;
-        this.logger = LogManager.getLogger(NorthernCompass.NAME);
+        this.logger = LoggerFactory.getLogger(NorthernCompass.NAME);
+        this.configuration = new Configuration(path);
+    }
+    
+    public void load() {
+        if (!getConfiguration().reloadConfiguration()) {
+            return;
+        }
     }
     
     public static NorthernCompass getInstance() {
@@ -39,5 +50,9 @@ public abstract class NorthernCompass {
     
     public Logger getLogger() {
         return logger;
+    }
+    
+    public Configuration getConfiguration() {
+        return configuration;
     }
 }
