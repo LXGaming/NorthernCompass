@@ -8,6 +8,7 @@
   "mixins": [
   ],
   "client": [
+    "client.multiplayer.ClientLevelMixin",
     "client.renderer.item.ItemPropertiesAccessor"
   ],
   "server": [

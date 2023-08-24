@@ -16,6 +16,8 @@
 
 package io.github.lxgaming.northerncompass.common.client.renderer.item;
 
+import io.github.lxgaming.northerncompass.common.NorthernCompass;
+import io.github.lxgaming.northerncompass.common.configuration.Config;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.core.Direction;
@@ -39,7 +41,7 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
     
     @Override
     public float unclampedCall(ItemStack itemStack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
-        if (angleCompassProperty != null && CompassItem.isLodestoneCompass(itemStack)) {
+        if (angleCompassProperty != null && (CompassItem.isLodestoneCompass(itemStack) || !isDimensionAllowed(level))) {
             return angleCompassProperty.unclampedCall(itemStack, level, entity, seed);
         }
         
@@ -87,5 +89,16 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
     
     private double getRotation(Entity entity) {
         return (entity.getYRot() + 180.0D) % 360.0D;
+    }
+    
+    private boolean isDimensionAllowed(@Nullable ClientLevel level) {
+        Config config = NorthernCompass.getInstance().getConfiguration().getConfig();
+        if (config == null || level == null) {
+            return true;
+        }
+        
+        String key = level.dimensionTypeId().location().toString();
+        Boolean value = config.getDimensionTypes().get(key);
+        return value != null ? value : config.isDimensionTypeFallback();
     }
 }

@@ -32,6 +32,12 @@ dependencies {
         transitive false
     }
     modImplementation("net.fabricmc:fabric-loader:${fabricLoaderVersion}")
+
+    [
+        "fabric-api-base"
+    ].forEach {
+        include(modImplementation(fabricApi.module(it, fabricApiVersion)))
+    }
 }
 
 artifacts {

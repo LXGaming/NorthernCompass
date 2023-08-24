@@ -14,23 +14,19 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.northerncompass.common.configuration;
+package io.github.lxgaming.northerncompass.fabric.event;
 
-import org.jetbrains.annotations.NotNull;
+import net.fabricmc.fabric.api.event.Event;
+import net.fabricmc.fabric.api.event.EventFactory;
+import net.minecraft.world.level.LevelAccessor;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class Config {
+public interface LoadLevelCallback {
     
-    private boolean dimensionTypeFallback = true;
-    private Map<String, Boolean> dimensionTypes = new HashMap<>();
+    Event<LoadLevelCallback> EVENT = EventFactory.createArrayBacked(LoadLevelCallback.class, callbacks -> (level) -> {
+        for (LoadLevelCallback callback : callbacks) {
+            callback.onLoadLevel(level);
+        }
+    });
     
-    public boolean isDimensionTypeFallback() {
-        return dimensionTypeFallback;
-    }
-    
-    public @NotNull Map<String, Boolean> getDimensionTypes() {
-        return dimensionTypes;
-    }
+    void onLoadLevel(LevelAccessor level);
 }

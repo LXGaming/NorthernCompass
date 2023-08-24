@@ -18,6 +18,8 @@ package io.github.lxgaming.northerncompass.fabric;
 
 import io.github.lxgaming.northerncompass.common.NorthernCompass;
 import io.github.lxgaming.northerncompass.common.client.renderer.item.AngleCompassProperty;
+import io.github.lxgaming.northerncompass.common.listener.LevelListener;
+import io.github.lxgaming.northerncompass.fabric.event.LoadLevelCallback;
 import io.github.lxgaming.northerncompass.fabric.mixin.core.client.renderer.item.ItemPropertiesAccessor;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
@@ -29,6 +31,8 @@ public class FabricMod extends NorthernCompass implements ClientModInitializer {
     
     public FabricMod() {
         super(FabricLoader.getInstance().getConfigDir().resolve(NorthernCompass.ID));
+        
+        LoadLevelCallback.EVENT.register(LevelListener::onLoadLevel);
     }
     
     @Override
