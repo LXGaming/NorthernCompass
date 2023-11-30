@@ -23,35 +23,35 @@ import org.slf4j.LoggerFactory;
 import java.nio.file.Path;
 
 public abstract class NorthernCompass {
-    
+
     public static final String ID = "northerncompass";
     public static final String NAME = "NorthernCompass";
     public static final String VERSION = "@version@";
-    
+
     private static NorthernCompass instance;
     private final Logger logger;
     private final Configuration configuration;
-    
+
     public NorthernCompass(Path path) {
         instance = this;
         this.logger = LoggerFactory.getLogger(NorthernCompass.NAME);
         this.configuration = new Configuration(path);
     }
-    
+
     public void load() {
         if (!getConfiguration().reloadConfiguration()) {
             return;
         }
     }
-    
+
     public static NorthernCompass getInstance() {
         return instance;
     }
-    
+
     public Logger getLogger() {
         return logger;
     }
-    
+
     public Configuration getConfiguration() {
         return configuration;
     }

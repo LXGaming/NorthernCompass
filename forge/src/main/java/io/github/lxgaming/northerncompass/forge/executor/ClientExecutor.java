@@ -23,13 +23,13 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.Items;
 
 public class ClientExecutor {
-    
+
     public static void onRegisterItem() {
         ClampedItemPropertyFunction angleCompassProperty = (ClampedItemPropertyFunction) ItemProperties.getProperty(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION);
         if (angleCompassProperty == null) {
             ForgeMod.getInstance().getLogger().warn("Compass Angle Property is unavailable");
         }
-        
+
         ItemProperties.register(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty(angleCompassProperty));
     }
 }

@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(value = ItemProperties.class)
 public interface ItemPropertiesAccessor {
-    
+
     @Invoker("register")
     static void accessor$register(Item item, ResourceLocation resourceLocation, ClampedItemPropertyFunction clampedItemPropertyFunction) {
         throw new IllegalStateException("Untransformed Accessor!");

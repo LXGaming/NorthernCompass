@@ -31,47 +31,47 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 public class AngleCompassProperty implements ClampedItemPropertyFunction {
-    
+
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("angle");
     private final ClampedItemPropertyFunction angleCompassProperty;
-    
+
     public AngleCompassProperty(ClampedItemPropertyFunction angleCompassProperty) {
         this.angleCompassProperty = angleCompassProperty;
     }
-    
+
     @Override
     public float unclampedCall(ItemStack itemStack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
         if (angleCompassProperty != null && (CompassItem.isLodestoneCompass(itemStack) || !isDimensionAllowed(level))) {
             return angleCompassProperty.unclampedCall(itemStack, level, entity, seed);
         }
-        
+
         if (entity == null && !itemStack.isFramed()) {
             return 0.0F;
         }
-        
+
         Entity currentEntity;
         if (entity != null) {
             currentEntity = entity;
         } else {
             currentEntity = itemStack.getFrame();
         }
-        
+
         if (currentEntity == null) {
             return 0.0F;
         }
-        
+
         double rotation;
         if (currentEntity instanceof ItemFrame) {
             rotation = getRotation((ItemFrame) currentEntity);
         } else {
             rotation = getRotation(currentEntity);
         }
-        
+
         double angle = 360.0D - rotation;
         double modulo = Mth.positiveModulo(angle / 360.0D, 1.0D);
         return (float) modulo;
     }
-    
+
     private double getRotation(ItemFrame itemFrame) {
         Direction direction = itemFrame.getDirection();
         double entityRotation;
@@ -82,21 +82,21 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
         } else {
             entityRotation = direction.get2DDataValue() * 90;
         }
-        
+
         int itemRotation = itemFrame.getRotation() * 45;
         return (entityRotation + itemRotation) % 360.0D;
     }
-    
+
     private double getRotation(Entity entity) {
         return (entity.getYRot() + 180.0D) % 360.0D;
     }
-    
+
     private boolean isDimensionAllowed(@Nullable ClientLevel level) {
         Config config = NorthernCompass.getInstance().getConfiguration().getConfig();
         if (config == null || level == null) {
             return true;
         }
-        
+
         String key = level.dimensionTypeId().location().toString();
         Boolean value = config.getDimensionTypes().get(key);
         return value != null ? value : config.isDimensionTypeFallback();

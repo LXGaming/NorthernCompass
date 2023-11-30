@@ -23,23 +23,23 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelAccessor;
 
 public class LevelListener {
-    
+
     public static void onLoadLevel(LevelAccessor level) {
         Config config = NorthernCompass.getInstance().getConfiguration().getConfig();
         if (config == null) {
             return;
         }
-        
+
         boolean save = false;
         for (ResourceLocation resourceLocation : level.registryAccess().registryOrThrow(Registries.DIMENSION_TYPE).keySet()) {
             if (config.getDimensionTypes().containsKey(resourceLocation.toString())) {
                 continue;
             }
-            
+
             config.getDimensionTypes().put(resourceLocation.toString(), null);
             save = true;
         }
-        
+
         if (save) {
             NorthernCompass.getInstance().getConfiguration().saveConfiguration();
         }

@@ -22,14 +22,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Config {
-    
+
     private boolean dimensionTypeFallback = true;
     private Map<String, Boolean> dimensionTypes = new HashMap<>();
-    
+
     public boolean isDimensionTypeFallback() {
         return dimensionTypeFallback;
     }
-    
+
     public @NotNull Map<String, Boolean> getDimensionTypes() {
         return dimensionTypes;
     }

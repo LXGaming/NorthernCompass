@@ -21,12 +21,12 @@ import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.world.level.LevelAccessor;
 
 public interface LoadLevelCallback {
-    
+
     Event<LoadLevelCallback> EVENT = EventFactory.createArrayBacked(LoadLevelCallback.class, callbacks -> (level) -> {
         for (LoadLevelCallback callback : callbacks) {
             callback.onLoadLevel(level);
         }
     });
-    
+
     void onLoadLevel(LevelAccessor level);
 }

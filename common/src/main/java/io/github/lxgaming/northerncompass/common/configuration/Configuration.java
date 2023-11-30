@@ -30,23 +30,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Configuration {
-    
+
     protected static final Gson GSON = new GsonBuilder()
             .disableHtmlEscaping()
             .enableComplexMapKeySerialization()
             .serializeNulls()
             .setPrettyPrinting()
             .create();
-    
+
     protected final Logger logger;
     protected final Path configPath;
     protected Config config;
-    
+
     public Configuration(Path path) {
         this.logger = LoggerFactory.getLogger(Configuration.class);
         this.configPath = path.resolve("config.json");
     }
-    
+
     public boolean loadConfiguration() {
         try {
             this.config = deserializeFile(configPath, Config.class);
@@ -56,7 +56,7 @@ public class Configuration {
             return false;
         }
     }
-    
+
     public boolean saveConfiguration() {
         try {
             serializeFile(configPath, config);
@@ -66,11 +66,11 @@ public class Configuration {
             return false;
         }
     }
-    
+
     public boolean reloadConfiguration() {
         return loadConfiguration() && saveConfiguration();
     }
-    
+
     protected <T> T deserializeFile(Path path, Class<T> type) throws IOException {
         if (!Files.exists(path)) {
             T value;
@@ -79,27 +79,27 @@ public class Configuration {
             } catch (Exception ex) {
                 throw new RuntimeException("Encountered an error while instantiating " + type.getName(), ex);
             }
-            
+
             serializeFile(path, value);
             return value;
         }
-        
+
         try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             return GSON.fromJson(reader, type);
         }
     }
-    
+
     protected <T> void serializeFile(Path path, T value) throws IOException {
         Path parentPath = path.getParent();
         if (parentPath != null && !Files.exists(parentPath)) {
             Files.createDirectories(parentPath);
         }
-        
+
         try (Writer writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
             GSON.toJson(value, writer);
         }
     }
-    
+
     public @Nullable Config getConfig() {
         return config;
     }

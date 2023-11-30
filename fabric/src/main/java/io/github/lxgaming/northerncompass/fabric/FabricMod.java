@@ -28,22 +28,22 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.Items;
 
 public class FabricMod extends NorthernCompass implements ClientModInitializer {
-    
+
     public FabricMod() {
         super(FabricLoader.getInstance().getConfigDir().resolve(NorthernCompass.ID));
-        
+
         LoadLevelCallback.EVENT.register(LevelListener::onLoadLevel);
     }
-    
+
     @Override
     public void onInitializeClient() {
         load();
-        
+
         ClampedItemPropertyFunction angleCompassProperty = (ClampedItemPropertyFunction) ItemProperties.getProperty(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION);
         if (angleCompassProperty == null) {
             getLogger().warn("Compass Angle Property is unavailable");
         }
-        
+
         ItemPropertiesAccessor.accessor$register(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION, new AngleCompassProperty(angleCompassProperty));
         getLogger().info("{} v{} Initialized", NorthernCompass.NAME, NorthernCompass.VERSION);
     }
