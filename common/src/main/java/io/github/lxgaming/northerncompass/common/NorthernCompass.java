@@ -17,6 +17,7 @@
 package io.github.lxgaming.northerncompass.common;
 
 import io.github.lxgaming.northerncompass.common.configuration.Configuration;
+import io.github.lxgaming.northerncompass.common.util.BuildParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ public abstract class NorthernCompass {
 
     public static final String ID = "northerncompass";
     public static final String NAME = "NorthernCompass";
-    public static final String VERSION = "@version@";
+    public static final String VERSION = BuildParameters.VERSION;
 
     private static NorthernCompass instance;
     private final Logger logger;

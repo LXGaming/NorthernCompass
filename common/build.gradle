@@ -8,10 +8,6 @@ architectury {
     common(platforms.split(","))
 }
 
-blossom {
-    replaceToken("@version@", version)
-}
-
 dependencies {
     modImplementation("net.fabricmc:fabric-loader:${fabricLoaderVersion}")
 }
@@ -23,4 +19,14 @@ processResources {
 
 remapJar {
     enabled = false
+}
+
+sourceSets {
+    main {
+        blossom {
+            javaSources {
+                property("version", version)
+            }
+        }
+    }
 }
