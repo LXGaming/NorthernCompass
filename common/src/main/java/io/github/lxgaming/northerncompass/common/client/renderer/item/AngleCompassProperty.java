@@ -53,7 +53,7 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
         if (level != null) {
             currentLevel = level;
         } else if (currentEntity != null) {
-            currentLevel = currentEntity.level();
+            currentLevel = currentEntity.getLevel();
         } else {
             currentLevel = null;
         }

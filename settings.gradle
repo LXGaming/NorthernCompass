@@ -13,18 +13,13 @@ pluginManagement {
             name = "minecraftforge"
             url = "https://maven.minecraftforge.net/"
         }
-        maven {
-            name = "neoforged"
-            url = "https://maven.neoforged.net/releases"
-        }
     }
 }
 
 [
     "common",
     "fabric",
-    "forge",
-    "neoforge"
+    "forge"
 ].each {
     include(it)
     findProject(":$it")?.name = "northerncompass-$it"
