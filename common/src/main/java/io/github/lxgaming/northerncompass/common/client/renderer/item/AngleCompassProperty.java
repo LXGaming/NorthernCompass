@@ -21,6 +21,8 @@ import io.github.lxgaming.northerncompass.common.configuration.Config;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -29,6 +31,7 @@ import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.CompassItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.DimensionType;
 import org.jetbrains.annotations.Nullable;
 
 public class AngleCompassProperty implements ClampedItemPropertyFunction {
@@ -53,7 +56,7 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
         if (level != null) {
             currentLevel = level;
         } else if (currentEntity != null) {
-            currentLevel = currentEntity.level();
+            currentLevel = currentEntity.level;
         } else {
             currentLevel = null;
         }
@@ -107,8 +110,13 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
             return config.isDimensionTypeFallback();
         }
 
-        String key = level.dimensionTypeId().location().toString();
-        Boolean value = config.getDimensionTypes().get(key);
+        Registry<DimensionType> registry = level.registryAccess().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY);
+        ResourceLocation key = registry.getResourceKey(level.dimensionType()).map(ResourceKey::location).orElse(null);
+        if (key == null) {
+            return config.isDimensionTypeFallback();
+        }
+
+        Boolean value = config.getDimensionTypes().get(key.toString());
         return value != null ? value : config.isDimensionTypeFallback();
     }
 }
