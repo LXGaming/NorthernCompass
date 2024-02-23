@@ -28,6 +28,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.CompassItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 public class AngleCompassProperty implements ClampedItemPropertyFunction {
@@ -41,19 +42,24 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
 
     @Override
     public float unclampedCall(ItemStack itemStack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
-        if (angleCompassProperty != null && (CompassItem.isLodestoneCompass(itemStack) || !isDimensionAllowed(level))) {
-            return angleCompassProperty.unclampedCall(itemStack, level, entity, seed);
-        }
-
-        if (entity == null && !itemStack.isFramed()) {
-            return 0.0F;
-        }
-
         Entity currentEntity;
         if (entity != null) {
             currentEntity = entity;
         } else {
-            currentEntity = itemStack.getFrame();
+            currentEntity = itemStack.getEntityRepresentation();
+        }
+
+        Level currentLevel;
+        if (level != null) {
+            currentLevel = level;
+        } else if (currentEntity != null) {
+            currentLevel = currentEntity.level();
+        } else {
+            currentLevel = null;
+        }
+
+        if (angleCompassProperty != null && (CompassItem.isLodestoneCompass(itemStack) || !isDimensionAllowed(currentLevel))) {
+            return angleCompassProperty.unclampedCall(itemStack, level, entity, seed);
         }
 
         if (currentEntity == null) {
@@ -91,10 +97,14 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
         return (entity.getYRot() + 180.0D) % 360.0D;
     }
 
-    private boolean isDimensionAllowed(@Nullable ClientLevel level) {
+    private boolean isDimensionAllowed(@Nullable Level level) {
         Config config = NorthernCompass.getInstance().getConfiguration().getConfig();
-        if (config == null || level == null) {
+        if (config == null) {
             return true;
+        }
+
+        if (level == null) {
+            return config.isDimensionTypeFallback();
         }
 
         String key = level.dimensionTypeId().location().toString();
