@@ -23,8 +23,8 @@ import io.github.lxgaming.northerncompass.fabric.event.LoadLevelCallback;
 import io.github.lxgaming.northerncompass.fabric.mixin.core.client.renderer.item.ItemPropertiesAccessor;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.world.item.Items;
 
 public class FabricMod extends NorthernCompass implements ClientModInitializer {
@@ -39,7 +39,7 @@ public class FabricMod extends NorthernCompass implements ClientModInitializer {
     public void onInitializeClient() {
         load();
 
-        ClampedItemPropertyFunction angleCompassProperty = (ClampedItemPropertyFunction) ItemProperties.getProperty(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION);
+        ItemPropertyFunction angleCompassProperty = (ItemPropertyFunction) ItemProperties.getProperty(Items.COMPASS, AngleCompassProperty.RESOURCE_LOCATION);
         if (angleCompassProperty == null) {
             getLogger().warn("Compass Angle Property is unavailable");
         }

@@ -19,8 +19,10 @@ package io.github.lxgaming.northerncompass.common.client.renderer.item;
 import io.github.lxgaming.northerncompass.common.NorthernCompass;
 import io.github.lxgaming.northerncompass.common.configuration.Config;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -29,19 +31,20 @@ import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.CompassItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.DimensionType;
 import org.jetbrains.annotations.Nullable;
 
-public class AngleCompassProperty implements ClampedItemPropertyFunction {
+public class AngleCompassProperty implements ItemPropertyFunction {
 
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("angle");
-    private final ClampedItemPropertyFunction angleCompassProperty;
+    private final ItemPropertyFunction angleCompassProperty;
 
-    public AngleCompassProperty(ClampedItemPropertyFunction angleCompassProperty) {
+    public AngleCompassProperty(ItemPropertyFunction angleCompassProperty) {
         this.angleCompassProperty = angleCompassProperty;
     }
 
     @Override
-    public float unclampedCall(ItemStack itemStack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
+    public float call(ItemStack itemStack, @Nullable ClientLevel level, @Nullable LivingEntity entity) {
         Entity currentEntity;
         if (entity != null) {
             currentEntity = entity;
@@ -53,13 +56,13 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
         if (level != null) {
             currentLevel = level;
         } else if (currentEntity != null) {
-            currentLevel = currentEntity.level();
+            currentLevel = currentEntity.level;
         } else {
             currentLevel = null;
         }
 
         if (angleCompassProperty != null && (CompassItem.isLodestoneCompass(itemStack) || !isDimensionAllowed(currentLevel))) {
-            return angleCompassProperty.unclampedCall(itemStack, level, entity, seed);
+            return angleCompassProperty.call(itemStack, level, entity);
         }
 
         if (currentEntity == null) {
@@ -94,7 +97,7 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
     }
 
     private double getRotation(Entity entity) {
-        return (entity.getYRot() + 180.0D) % 360.0D;
+        return (entity.yRot + 180.0D) % 360.0D;
     }
 
     private boolean isDimensionAllowed(@Nullable Level level) {
@@ -107,8 +110,13 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
             return config.isDimensionTypeFallback();
         }
 
-        String key = level.dimensionTypeId().location().toString();
-        Boolean value = config.getDimensionTypes().get(key);
+        Registry<DimensionType> registry = level.registryAccess().registryOrThrow(Registry.DIMENSION_TYPE_REGISTRY);
+        ResourceLocation key = registry.getResourceKey(level.dimensionType()).map(ResourceKey::location).orElse(null);
+        if (key == null) {
+            return config.isDimensionTypeFallback();
+        }
+
+        Boolean value = config.getDimensionTypes().get(key.toString());
         return value != null ? value : config.isDimensionTypeFallback();
     }
 }

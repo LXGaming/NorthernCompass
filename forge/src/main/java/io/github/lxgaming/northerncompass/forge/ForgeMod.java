@@ -20,7 +20,7 @@ import io.github.lxgaming.northerncompass.common.NorthernCompass;
 import io.github.lxgaming.northerncompass.common.listener.LevelListener;
 import io.github.lxgaming.northerncompass.forge.executor.ClientExecutor;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.StartupMessageManager;
 import net.minecraftforge.fml.common.Mod;
@@ -35,7 +35,7 @@ public class ForgeMod extends NorthernCompass {
         super(FMLPaths.CONFIGDIR.get().resolve(NorthernCompass.ID));
 
         FMLJavaModLoadingContext.get().getModEventBus().register(this);
-        MinecraftForge.EVENT_BUS.addListener((LevelEvent.Load event) -> LevelListener.onLoadLevel(event.getLevel()));
+        MinecraftForge.EVENT_BUS.addListener((WorldEvent.Load event) -> LevelListener.onLoadLevel(event.getWorld()));
 
         StartupMessageManager.addModMessage(String.format("%s v%s Initialized", NorthernCompass.NAME, NorthernCompass.VERSION));
         getLogger().info("{} v{} Initialized", NorthernCompass.NAME, NorthernCompass.VERSION);
