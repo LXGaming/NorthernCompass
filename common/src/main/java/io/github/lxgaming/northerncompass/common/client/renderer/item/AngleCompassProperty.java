@@ -21,6 +21,7 @@ import io.github.lxgaming.northerncompass.common.configuration.Config;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -53,7 +54,7 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
         if (level != null) {
             currentLevel = level;
         } else if (currentEntity != null) {
-            currentLevel = currentEntity.level();
+            currentLevel = currentEntity.getLevel();
         } else {
             currentLevel = null;
         }
@@ -107,8 +108,12 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
             return config.isDimensionTypeFallback();
         }
 
-        String key = level.dimensionTypeId().location().toString();
-        Boolean value = config.getDimensionTypes().get(key);
+        ResourceLocation key = level.dimensionTypeRegistration().unwrapKey().map(ResourceKey::location).orElse(null);
+        if (key == null) {
+            return config.isDimensionTypeFallback();
+        }
+
+        Boolean value = config.getDimensionTypes().get(key.toString());
         return value != null ? value : config.isDimensionTypeFallback();
     }
 }
