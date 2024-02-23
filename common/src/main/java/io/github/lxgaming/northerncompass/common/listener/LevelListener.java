@@ -18,7 +18,7 @@ package io.github.lxgaming.northerncompass.common.listener;
 
 import io.github.lxgaming.northerncompass.common.NorthernCompass;
 import io.github.lxgaming.northerncompass.common.configuration.Config;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelAccessor;
 
@@ -31,7 +31,7 @@ public class LevelListener {
         }
 
         boolean save = false;
-        for (ResourceLocation resourceLocation : level.registryAccess().registryOrThrow(Registries.DIMENSION_TYPE).keySet()) {
+        for (ResourceLocation resourceLocation : Registry.DIMENSION_TYPE.keySet()) {
             if (config.getDimensionTypes().containsKey(resourceLocation.toString())) {
                 continue;
             }
