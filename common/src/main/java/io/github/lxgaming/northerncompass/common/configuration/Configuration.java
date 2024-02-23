@@ -18,9 +18,9 @@ package io.github.lxgaming.northerncompass.common.configuration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -43,7 +43,7 @@ public class Configuration {
     protected Config config;
 
     public Configuration(Path path) {
-        this.logger = LoggerFactory.getLogger(Configuration.class);
+        this.logger = LogManager.getLogger(Configuration.class);
         this.configPath = path.resolve("config.json");
     }
 

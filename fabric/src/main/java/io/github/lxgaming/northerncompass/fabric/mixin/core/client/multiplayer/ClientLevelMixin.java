@@ -17,14 +17,14 @@
 package io.github.lxgaming.northerncompass.fabric.mixin.core.client.multiplayer;
 
 import io.github.lxgaming.northerncompass.fabric.event.LoadLevelCallback;
-import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.multiplayer.MultiPlayerLevel;
 import net.minecraft.world.level.LevelAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = ClientLevel.class)
+@Mixin(value = MultiPlayerLevel.class)
 public abstract class ClientLevelMixin {
 
     @Inject(
