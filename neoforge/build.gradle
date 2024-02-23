@@ -1,8 +1,8 @@
-archivesBaseName = "NorthernCompass-Forge"
+archivesBaseName = "NorthernCompass-NeoForge"
 
 architectury {
     platformSetupLoomIde()
-    forge()
+    neoForge()
 }
 
 loom {
@@ -10,13 +10,13 @@ loom {
 }
 
 configurations {
-    developmentForge.extendsFrom(common)
+    developmentNeoForge.extendsFrom(common)
 }
 
 repositories {
     maven {
-        name = "minecraftforge"
-        url = "https://maven.minecraftforge.net/"
+        name = "neoforged"
+        url = "https://maven.neoforged.net/releases"
     }
 }
 
@@ -24,10 +24,10 @@ dependencies {
     common(project(path: ":northerncompass-common", configuration: "namedElements")) {
         transitive false
     }
-    compileJar(project(path: ":northerncompass-common", configuration: "transformProductionForge")) {
+    compileJar(project(path: ":northerncompass-common", configuration: "transformProductionNeoForge")) {
         transitive = false
     }
-    forge("net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}")
+    neoForge("net.neoforged:neoforge:${neoForgeVersion}")
 }
 
 artifacts {

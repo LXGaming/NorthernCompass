@@ -52,5 +52,6 @@ jobs:
         files: |
           ./fabric/build/libs/*.jar
           ./forge/build/libs/*.jar
+          ./neoforge/build/libs/*.jar
         generate_release_notes: true
         name: ${{ env.release_name }}

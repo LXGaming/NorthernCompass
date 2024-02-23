@@ -10,6 +10,10 @@ pluginManagement {
             url = "https://maven.fabricmc.net/"
         }
         maven {
+            name = "minecraftforge"
+            url = "https://maven.minecraftforge.net/"
+        }
+        maven {
             name = "neoforged"
             url = "https://maven.neoforged.net/releases"
         }
@@ -19,7 +23,8 @@ pluginManagement {
 [
     "common",
     "fabric",
-    "forge"
+    "forge",
+    "neoforge"
 ].each {
     include(it)
     findProject(":$it")?.name = "northerncompass-$it"
