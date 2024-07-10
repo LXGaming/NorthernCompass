@@ -33,7 +33,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class AngleCompassProperty implements ClampedItemPropertyFunction {
 
-    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation("angle");
+    public static final ResourceLocation RESOURCE_LOCATION = ResourceLocation.withDefaultNamespace("angle");
     private final ClampedItemPropertyFunction angleCompassProperty;
 
     public AngleCompassProperty(ClampedItemPropertyFunction angleCompassProperty) {
