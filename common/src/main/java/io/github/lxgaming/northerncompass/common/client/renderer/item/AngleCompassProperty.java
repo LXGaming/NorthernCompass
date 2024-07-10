@@ -86,10 +86,10 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
         } else if (direction == Direction.DOWN) {
             entityRotation = 180.0D;
         } else {
-            entityRotation = direction.get2DDataValue() * 90;
+            entityRotation = direction.get2DDataValue() * 90.0D;
         }
 
-        int itemRotation = itemFrame.getRotation() * 45;
+        double itemRotation = itemFrame.getRotation() * 45.0D;
         return (entityRotation + itemRotation) % 360.0D;
     }
 
