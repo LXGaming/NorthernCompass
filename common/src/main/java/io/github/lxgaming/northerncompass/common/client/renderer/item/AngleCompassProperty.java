@@ -21,12 +21,12 @@ import io.github.lxgaming.northerncompass.common.configuration.Config;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ItemFrame;
-import net.minecraft.world.item.CompassItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -58,7 +58,7 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
             currentLevel = null;
         }
 
-        if (angleCompassProperty != null && (CompassItem.isLodestoneCompass(itemStack) || !isDimensionAllowed(currentLevel))) {
+        if (angleCompassProperty != null && (itemStack.has(DataComponents.LODESTONE_TRACKER) || !isDimensionAllowed(currentLevel))) {
             return angleCompassProperty.unclampedCall(itemStack, level, entity, seed);
         }
 
@@ -107,7 +107,12 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
             return config.isDimensionTypeFallback();
         }
 
-        String key = level.dimensionTypeId().location().toString();
+        var dimensionTypeId = level.dimensionTypeRegistration().unwrapKey().orElse(null);
+        if (dimensionTypeId == null) {
+            return config.isDimensionTypeFallback();
+        }
+
+        String key = dimensionTypeId.location().toString();
         Boolean value = config.getDimensionTypes().get(key);
         return value != null ? value : config.isDimensionTypeFallback();
     }

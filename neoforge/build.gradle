@@ -57,7 +57,7 @@ jar {
 processResources {
     duplicatesStrategy(DuplicatesStrategy.INCLUDE)
     from (sourceSets.main.resources.srcDirs) {
-        include("META-INF/mods.toml")
+        include("META-INF/neoforge.mods.toml")
         expand("version": version)
     }
 }

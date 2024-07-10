@@ -21,10 +21,10 @@ import io.github.lxgaming.northerncompass.common.listener.LevelListener;
 import io.github.lxgaming.northerncompass.neoforge.executor.ClientExecutor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.StartupMessageManager;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.fml.loading.progress.StartupNotificationManager;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.level.LevelEvent;
 
@@ -37,7 +37,7 @@ public class NeoForgeMod extends NorthernCompass {
         eventBus.register(this);
         NeoForge.EVENT_BUS.addListener((LevelEvent.Load event) -> LevelListener.onLoadLevel(event.getLevel()));
 
-        StartupMessageManager.addModMessage(String.format("%s v%s Initialized", NorthernCompass.NAME, NorthernCompass.VERSION));
+        StartupNotificationManager.addModMessage(String.format("%s v%s Initialized", NorthernCompass.NAME, NorthernCompass.VERSION));
         getLogger().info("{} v{} Initialized", NorthernCompass.NAME, NorthernCompass.VERSION);
     }
 
