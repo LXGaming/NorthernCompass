@@ -3,29 +3,29 @@ pluginManagement {
         gradlePluginPortal()
         maven {
             name = "architectury"
-            url = "https://maven.architectury.dev/"
+            url = uri("https://maven.architectury.dev/")
         }
         maven {
             name = "fabricmc"
-            url = "https://maven.fabricmc.net/"
+            url = uri("https://maven.fabricmc.net/")
         }
         maven {
             name = "minecraftforge"
-            url = "https://maven.minecraftforge.net/"
+            url = uri("https://maven.minecraftforge.net/")
         }
         maven {
             name = "neoforged"
-            url = "https://maven.neoforged.net/releases"
+            url = uri("https://maven.neoforged.net/releases")
         }
     }
 }
 
-[
+listOf(
     "common",
     "fabric",
     "forge",
     "neoforge"
-].each {
+).forEach {
     include(it)
-    findProject(":$it")?.name = "northerncompass-$it"
+    findProject(":${it}")?.name = "northerncompass-${it}"
 }
