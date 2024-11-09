@@ -28,10 +28,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ClientLevelMixin {
 
     @Inject(
-            method = "<init>",
-            at = @At(
-                    value = "RETURN"
-            )
+        method = "<init>",
+        at = @At(
+            value = "RETURN"
+        )
     )
     private void onInit(CallbackInfo callbackInfo) {
         LoadLevelCallback.EVENT.invoker().onLoadLevel((LevelAccessor) this);

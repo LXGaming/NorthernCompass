@@ -32,11 +32,11 @@ import java.nio.file.Path;
 public class Configuration {
 
     protected static final Gson GSON = new GsonBuilder()
-            .disableHtmlEscaping()
-            .enableComplexMapKeySerialization()
-            .serializeNulls()
-            .setPrettyPrinting()
-            .create();
+        .disableHtmlEscaping()
+        .enableComplexMapKeySerialization()
+        .serializeNulls()
+        .setPrettyPrinting()
+        .create();
 
     protected final Logger logger;
     protected final Path configPath;
