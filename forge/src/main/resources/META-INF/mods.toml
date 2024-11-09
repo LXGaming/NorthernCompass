@@ -12,5 +12,7 @@ logoFile="icon.png"
 credits="LX_Gaming"
 authors="LX_Gaming"
 description="""
+    Makes the Minecraft compass point north.
+
 Source: https://github.com/LXGaming/NorthernCompass
 """

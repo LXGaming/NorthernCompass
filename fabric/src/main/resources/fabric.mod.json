@@ -3,7 +3,7 @@
   "id": "northerncompass",
   "name": "NorthernCompass",
   "version": "${version}",
-  "description": "Makes the Minecraft compass point north",
+  "description": "Makes the Minecraft compass point north.",
   "authors": [
     "LX_Gaming"
   ],
