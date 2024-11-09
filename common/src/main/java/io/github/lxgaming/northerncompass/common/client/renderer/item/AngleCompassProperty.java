@@ -22,6 +22,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -29,6 +30,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.DimensionType;
 import org.jetbrains.annotations.Nullable;
 
 public class AngleCompassProperty implements ClampedItemPropertyFunction {
@@ -107,7 +109,7 @@ public class AngleCompassProperty implements ClampedItemPropertyFunction {
             return config.isDimensionTypeFallback();
         }
 
-        var dimensionTypeId = level.dimensionTypeRegistration().unwrapKey().orElse(null);
+        ResourceKey<DimensionType> dimensionTypeId = level.dimensionTypeRegistration().unwrapKey().orElse(null);
         if (dimensionTypeId == null) {
             return config.isDimensionTypeFallback();
         }
