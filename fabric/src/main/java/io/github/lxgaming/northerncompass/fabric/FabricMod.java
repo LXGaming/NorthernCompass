@@ -20,7 +20,7 @@ import io.github.lxgaming.northerncompass.common.NorthernCompass;
 import io.github.lxgaming.northerncompass.common.client.renderer.item.AngleCompassProperty;
 import io.github.lxgaming.northerncompass.common.listener.LevelListener;
 import io.github.lxgaming.northerncompass.fabric.event.LoadLevelCallback;
-import io.github.lxgaming.northerncompass.fabric.mixin.core.client.renderer.item.ItemPropertiesAccessor;
+import io.github.lxgaming.northerncompass.fabric.mixin.minecraft.client.renderer.item.ItemPropertiesAccessor;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;

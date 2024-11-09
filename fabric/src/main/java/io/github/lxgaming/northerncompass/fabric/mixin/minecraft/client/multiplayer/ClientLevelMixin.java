@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.northerncompass.fabric.mixin.core.client.multiplayer;
+package io.github.lxgaming.northerncompass.fabric.mixin.minecraft.client.multiplayer;
 
 import io.github.lxgaming.northerncompass.fabric.event.LoadLevelCallback;
 import net.minecraft.client.multiplayer.ClientLevel;

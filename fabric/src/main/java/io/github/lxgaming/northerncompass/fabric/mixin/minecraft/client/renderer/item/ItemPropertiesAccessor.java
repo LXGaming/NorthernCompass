@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.lxgaming.northerncompass.fabric.mixin.core.client.renderer.item;
+package io.github.lxgaming.northerncompass.fabric.mixin.minecraft.client.renderer.item;
 
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
